@@ -7,7 +7,7 @@ const bplist = require('bplist-parser');
 
 
 
-const tvOSversion = 16; // must be 10 or higher
+const tvOSversion = parseInt(process.argv[2]) ?? 16; // must be 10 or higher
 
 
 
@@ -64,22 +64,17 @@ const getFilesInDir = (dirPath, rmInName) => {
 fs.mkdirSync('./temp');
 fs.mkdirSync('./temp/extracted');
 
-const resourceUrl = {
-    '16': 'https://sylvan.apple.com/Aerials/resources-16.tar',
-    '15': 'https://sylvan.apple.com/Aerials/resources-15.tar',
-    '14': 'https://sylvan.apple.com/Aerials/resources-14.tar',
-    '13': 'https://sylvan.apple.com/Aerials/resources-13.tar',
-
+const resourceUrl = tvOSversion > 12 ? 'https://sylvan.apple.com/Aerials/resources-' + tvOSversion + '.tar' : {
     '12': 'https://sylvan.apple.com/Aerials/resources.tar',
-
     '11': 'https://sylvan.apple.com/Aerials/2x/entries.json',
-
     '10': 'http://a1.phobos.apple.com/us/r1000/000/Features/atv/AutumnResources/videos/entries.json'
 }[tvOSversion.toString()];
 
 (async () => {
     if (tvOSversion > 11) {
-        fs.writeFileSync('./temp/resources.tar', await get(resourceUrl));
+        const data = await get(resourceUrl);
+        if (data.toString('hex', 0, 1).toLowerCase() == '3c3f786d6c20766572') throw new Error('VERSION_TOO_HIGH');
+        fs.writeFileSync('./temp/resources.tar', data);
 
         await new Promise((resolve, reject) => fs.createReadStream('./temp/resources.tar').pipe((() => {
             const extract = tar.extract({ cwd: './temp/extracted' });
@@ -88,9 +83,9 @@ const resourceUrl = {
         })()));
 
         fs.rmSync('./temp/resources.tar');
-    } else {
+    } else if (tvOSversion > 9) {
         fs.writeFileSync('./temp/extracted/entries.json', await get(resourceUrl));
-    };
+    } else throw new Error('VERSION_TOO_LOW');
 
     const resources = getFilesInDir('./temp/extracted', true);
     const resourcesDirs = getDirsInDir('./temp/extracted', true);
