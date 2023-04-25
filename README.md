@@ -11,7 +11,7 @@ This script...
 # Usage
 
 1. Clone the repo
-2. Run `node . <VERSION>` (replace the <VERSION> with an integer above 9, this is the tvOS version).
+2. Run `node . <VERSION>` (replace the \<VERSION\> with an integer above 9, this is the tvOS version).
 3. Do whatever you want with the newly created _resources.hssp_ file in the project folder.
 
 
