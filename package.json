@@ -1,6 +1,6 @@
 {
   "name": "aerial-hssp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gets the Aerial Screensaver data and packs it into a HSSP archive.",
   "main": "main.js",
   "scripts": {
