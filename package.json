@@ -1,0 +1,30 @@
+{
+  "name": "aerial-hssp",
+  "version": "1.0.0",
+  "description": "Gets the Aerial Screensaver data and packs it into a HSSP archive.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Le0X8/aerial-hssp.git"
+  },
+  "keywords": [
+    "Aerial",
+    "Screensaver",
+    "HSSP"
+  ],
+  "author": "LeoX DEV",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Le0X8/aerial-hssp/issues"
+  },
+  "homepage": "https://github.com/Le0X8/aerial-hssp#readme",
+  "dependencies": {
+    "bplist-parser": "^0.3.2",
+    "hssp": "^4.0.1",
+    "plist": "^3.1.0",
+    "tar": "^6.1.13"
+  }
+}
